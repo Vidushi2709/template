@@ -1,0 +1,449 @@
+import { SiteFrame } from "@/components/site-frame"
+import { Panel } from "@/components/panel"
+import Image from "next/image"
+
+export default function AboutPage() {
+  return (
+    <SiteFrame title="SUGARANGEL" contentHeight={640}>
+      <Panel title="about me" className="h-[300px]" scrollable>
+        <div className="flex flex-col items-start gap-4 md:flex-row">
+          <Image
+            src="/images/pink-sticker.png"
+            alt="avatar sticker"
+            width={96}
+            height={96}
+            className="rounded-xl border-[3px] border-[#f2c9a5] bg-white p-1"
+          />
+          <div className="space-y-2">
+            <p>
+              {"hi! i\u2019m the webprincess behind sugarangel. i love cozy ui, pastels, and pixel details. offline: tea & stationery. online: css borders and cute buttons."}
+            </p>
+            <p>
+              {"this site is my little corner of the net\u2014expect experiments, notes, and a sprinkle of sparkles."}
+            </p>
+          </div>
+        </div>
+      </Panel>
+
+      <Panel title="skills" className="h-[180px]" scrollable>
+        <ul className="grid list-disc grid-cols-1 gap-x-6 gap-y-1 pl-6 sm:grid-cols-2">
+          <li>{"TypeScript / React / Next.js"}</li>
+          <li>{"Tailwind CSS & design systems"}</li>
+          <li>{"Node.js, API routes & server actions"}</li>
+          <li>{"Accessibility & responsive design"}</li>
+        </ul>
+      </Panel>
+
+      <Panel title="currently" className="h-[140px]" scrollable>
+        <p>{"learning: motion design + 2d pixel doodles. building: cute components & tiny webtoys."}</p>
+      </Panel>
+    </SiteFrame>
+  )
+}
+
+// components/site-frame.tsx
+import Image from "next/image"
+import { Pixelify_Sans, Nunito } from 'next/font/google'
+import type { PropsWithChildren, ReactNode } from "react"
+import { LeftNav } from "@/components/left-nav"
+
+const pixel = Pixelify_Sans({ weight: ["400", "700"], subsets: ["latin"] })
+const bodyFont = Nunito({ subsets: ["latin"] })
+
+type SiteFrameProps = PropsWithChildren<{
+  title?: string
+  rightSidebar?: ReactNode
+  contentHeight?: number // used on md+ to clamp interior height
+}>
+
+export function SiteFrame({ title = "SUGARANGEL", rightSidebar = null, children, contentHeight = 640 }: SiteFrameProps) {
+  return (
+    <main
+      className={`min-h-screen w-full ${bodyFont.className}`}
+      style={{
+        backgroundImage: 'url("/images/polka-dots.png")',
+        backgroundSize: "24px 24px",
+      }}
+    >
+      <div className="mx-auto max-w-6xl px-4 py-6 md:py-10">
+        <div className="rounded-3xl border-[4px] border-[#e8bf98] bg-[#ffe9d6] shadow-[0_4px_0_#d9ae86]">
+          <header className="relative overflow-hidden rounded-t-[22px]">
+            <div className="relative h-28 w-full md:h-36">
+              <Image
+                src="/images/hero-tea-cookies.png"
+                alt="pastel header with lace, cookies and tea"
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
+            <div
+              className="absolute inset-x-0 top-0 h-6 bg-repeat-x"
+              style={{ backgroundImage: 'url("/images/lace-top.png")', backgroundSize: "auto 24px" }}
+            />
+            <div className="absolute inset-x-0 bottom-0 flex items-center justify-center pb-3">
+              <h1
+                className={`${pixel.className} text-3xl md:text-4xl font-extrabold tracking-[0.25em] text-[#ff8cc6] drop-shadow-[0_2px_0_#fff]`}
+                aria-label={title}
+              >
+                {title}
+              </h1>
+            </div>
+          </header>
+
+          {/* Interior clamp: on md+ we lock the height so sidebars are static and only the center scrolls */}
+          <div className="p-3 md:p-4">
+            <div
+              className="grid grid-cols-1 gap-3 md:grid-cols-12 md:gap-4 overflow-visible md:overflow-hidden"
+              style={{
+                // clamp interior height to keep a static window on md+
+                // header + paddings already accounted by outer wrapper
+                // we use px height so panels can fill exactly.
+                height: "auto",
+                // @ts-ignore: runtime style for md via CSS var
+                ["--content-h" as any]: `${contentHeight}px`,
+              }}
+            >
+              {/* Left: static column */}
+              <aside className="space-y-3 md:col-span-3 md:h-[var(--content-h)]">
+                <LeftNav />
+                {/* Extra filler so columns balance visually */}
+                <div className="hidden md:block">
+                  <div className="rounded-2xl border-[3px] border-[#f2c9a5] bg-[#fff7ef] p-3 text-sm text-[#9a7f62] shadow-[0_2px_0_#e6b98f,inset_0_0_0_3px_#ffe6cc]">
+                    {"thanks for visiting ♡"}
+                  </div>
+                </div>
+              </aside>
+
+              {/* Center: the only scrollable area */}
+              <section className="space-y-3 md:col-span-6 md:h-[var(--content-h)] md:overflow-y-auto md:pr-1">
+                {children}
+              </section>
+
+              {/* Right: static column */}
+              <aside className="space-y-3 md:col-span-3 md:h-[var(--content-h)]">{rightSidebar}</aside>
+            </div>
+          </div>
+
+          <div
+            className="h-6 w-full rounded-b-[22px] bg-repeat-x"
+            style={{ backgroundImage: 'url("/images/lace-top.png")', backgroundSize: "auto 24px" }}
+          />
+        </div>
+      </div>
+    </main>
+  )
+}
+
+// app/page.tsx
+import Image from 'next/image';
+import styles from './page.module.css';
+
+const HomePage = () => {
+  return (
+    <div className={styles.container}>
+      <div className={styles.header} style={{ backgroundImage: 'url("/images/abstract-music-cover.png")' }}>
+        {/* rest of code here */}
+      </div>
+      <div className={styles.badges}>
+        <Image src="/images/cute-badge.png" alt="cute badge" width={88} height={28} unoptimized />
+        <Image src="/images/placeholder-9uyh2.png" alt="badge" width={88} height={28} unoptimized />
+        <Image src="/images/room-badge.png" alt="badge" width={88} height={28} unoptimized />
+        {/* rest of code here */}
+      </div>
+    </div>
+  );
+};
+
+export default HomePage;
+
+// components/project-card.tsx
+import Image from 'next/image';
+
+const ProjectCard = ({ title, image }) => {
+  return (
+    <div>
+      <Image
+        src={image || "/images/abstract-music-cover.png"}
+        alt={`${title} preview`}
+        width={72}
+        height={72}
+        unoptimized
+        className="rounded-lg border-[3px] border-[#f2c9a5] bg-white p-1"
+      />
+      {/* rest of code here */}
+    </div>
+  );
+};
+
+export default ProjectCard;
+
+// data/projects.ts
+export const projects = [
+  {
+    slug: "kawaii-panels",
+    title: "Kawaii Panels",
+    description: "A set of pastel, rounded panel components with dotted borders.",
+    image: "/images/abstract-music-cover.png",
+    link: "#",
+    repo: "#",
+  },
+  {
+    slug: "toybox-badges",
+    title: "Toybox Badges",
+    description: "A tiny badge generator for cute blog widgets.",
+    image: "/images/cute-badge.png",
+    link: "#",
+    repo: "#",
+  },
+];
+
+// components/panel.tsx
+import { cn } from "@/lib/utils"
+import type { PropsWithChildren } from "react"
+
+type PanelProps = PropsWithChildren<{
+  title?: string
+  className?: string
+  scrollable?: boolean
+  headerDecor?: boolean
+  contentClassName?: string
+}>
+
+export function Panel({
+  title = "",
+  className,
+  children,
+  scrollable = false,
+  headerDecor = true,
+  contentClassName,
+}: PanelProps) {
+  return (
+    <section
+      className={cn(
+        "rounded-2xl border-[3px] border-[#f2c9a5] bg-[#fff7ef] shadow-[0_2px_0_#e6b98f,inset_0_0_0_3px_#ffe6cc] overflow-hidden",
+        className,
+      )}
+      aria-label={title || "panel"}
+    >
+      {title ? (
+        <div className="relative border-b-[3px] border-[#f2c9a5]">
+          {headerDecor && (
+            <div
+              className="h-6 w-full bg-repeat-x"
+              style={{ backgroundImage: 'url("/images/lace-top.png")', backgroundSize: "auto 24px" }}
+              aria-hidden="true"
+            />
+          )}
+          <h2 className="px-4 py-2 text-center text-lg font-extrabold tracking-widest text-[#ff71b3] drop-shadow-[0_1px_0_#fff]">
+            {title}
+          </h2>
+        </div>
+      ) : null}
+      <div
+        className={cn(
+          "p-3 text-[15px] leading-relaxed text-[#7a6b55]",
+          scrollable ? "h-full overflow-y-auto pr-2" : "",
+          contentClassName,
+        )}
+      >
+        {children}
+      </div>
+    </section>
+  )
+}
+
+// app/contact/page.tsx
+"use client"
+
+import { useFormState, useFormStatus } from "react-dom"
+import { SiteFrame } from "@/components/site-frame"
+import { Panel } from "@/components/panel"
+import { sendContact, type ContactState } from "@/app/actions"
+import { initialState } from "@/app/state"
+import Input from "@/components/ui/input"
+import Textarea from "@/components/ui/textarea"
+import Button from "@/components/ui/button"
+import Link from "next/link"
+
+function SubmitButton() {
+  const { pending } = useFormStatus()
+  return (
+    <Button
+      type="submit"
+      disabled={pending}
+      className="rounded-full border-[3px] border-[#f2c9a5] bg-[#fff7ef] text-[#d86fa2] shadow-[0_2px_0_#e6b98f] hover:bg-[#ffe6cc]"
+    >
+      {pending ? "sending..." : "send message"}
+    </Button>
+  )
+}
+
+export default function ContactPage() {
+  const [state, formAction] = useFormState<ContactState, FormData>(sendContact, initialState)
+
+  return (
+    <SiteFrame title="SUGARANGEL" contentHeight={640} rightSidebar={
+      <>
+        <Panel title="socials" className="h-[310px]" scrollable>
+          <div className="flex flex-col gap-2">
+            <Link href="https://github.com/" target="_blank" className="rounded-full border-[3px] border-[#f2c9a5] bg-[#fff7ef] px-3 py-1 font-semibold text-[#d86fa2] shadow-[0_2px_0_#e6b98f]">
+              {"github"}
+            </Link>
+            <Link href="https://www.linkedin.com/" target="_blank" className="rounded-full border-[3px] border-[#f2c9a5] bg-[#fff7ef] px-3 py-1 font-semibold text-[#d86fa2] shadow-[0_2px_0_#e6b98f]">
+              {"linkedin"}
+            </Link>
+            <Link href="mailto:you@example.com" className="rounded-full border-[3px] border-[#f2c9a5] bg-[#fff7ef] px-3 py-1 font-semibold text-[#d86fa2] shadow-[0_2px_0_#e6b98f]">
+              {"email"}
+            </Link>
+            <Link href="https://x.com/" target="_blank" className="rounded-full border-[3px] border-[#f2c9a5] bg-[#fff7ef] px-3 py-1 font-semibold text-[#d86fa2] shadow-[0_2px_0_#e6b98f]">
+              {"x / twitter"}
+            </Link>
+            <Link href="https://instagram.com/" target="_blank" className="rounded-full border-[3px] border-[#f2c9a5] bg-[#fff7ef] px-3 py-1 font-semibold text-[#d86fa2] shadow-[0_2px_0_#e6b98f]">
+              {"instagram"}
+            </Link>
+          </div>
+        </Panel>
+
+        <Panel title="now playing">
+          <div className="mt-1 h-2 w-full rounded-full bg-[#ffe1ef]">
+            <div className="h-2 w-2/3 rounded-full bg-[#ff8cc6]" />
+          </div>
+        </Panel>
+      </>
+    }>
+      {/* Center column scrolls; use h-[640px] to match the window and keep symmetry */}
+      <Panel title="get in touch" className="h-[640px]" scrollable>
+        <p className="mb-3">
+          {"send a sweet note below \u2014 i read each message with a warm cup of tea."}
+        </p>
+        <form action={formAction} className="space-y-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div>
+              <label htmlFor="name" className="mb-1 block text-sm font-semibold text-[#9a7f62]">
+                {"name"}
+              </label>
+              <Input id="name" name="name" placeholder="your name" required />
+            </div>
+            <div>
+              <label htmlFor="email" className="mb-1 block text-sm font-semibold text-[#9a7f62]">
+                {"email"}
+              </label>
+              <Input id="email" name="email" type="email" placeholder="you@example.com" required />
+            </div>
+          </div>
+          <div>
+            <label htmlFor="message" className="mb-1 block text-sm font-semibold text-[#9a7f62]">
+              {"message"}
+            </label>
+            <Textarea id="message" name="message" rows={10} placeholder="write something sweet..." required />
+          </div>
+          <div className="flex items-center gap-3">
+            <SubmitButton />
+            {state?.message ? (
+              <span className={`text-sm ${state.ok ? "text-green-600" : "text-red-600"}`}>
+                {state.message} {state.simulated ? "(simulated)" : ""}
+              </span>
+            ) : null}
+          </div>
+        </form>
+      </Panel>
+    </SiteFrame>
+  )
+}
+
+// app/resume/page.tsx
+import { SiteFrame } from "@/components/site-frame"
+import { Panel } from "@/components/panel"
+import Link from "next/link"
+
+export default function ResumePage() {
+  return (
+    <SiteFrame title="SUGARANGEL" contentHeight={640}>
+      <Panel title="resume" className="h-[640px]" scrollable>
+        <p className="mb-3">
+          {"view or download my resume below. the viewer is compact so the page stays static."}
+        </p>
+        <div className="mb-3 overflow-hidden rounded-xl border-[3px] border-[#f2c9a5] bg-white">
+          <object data="/files/resume.pdf" type="application/pdf" className="h-[420px] w-full">
+            <p className="p-4">
+              {"your browser cannot display PDFs. please "}
+              <Link href="/files/resume.pdf" className="underline">
+                {"download the resume"}
+              </Link>
+              {" instead."}
+            </p>
+          </object>
+        </div>
+        <div className="flex gap-2">
+          <Link
+            href="/files/resume.pdf"
+            download
+            className="rounded-full border-[3px] border-[#f2c9a5] bg-[#fff7ef] px-4 py-2 font-semibold text-[#d86fa2] shadow-[0_2px_0_#e6b98f]"
+          >
+            {"download PDF"}
+          </Link>
+          <Link
+            href="/files/resume.pdf"
+            target="_blank"
+            className="rounded-full border-[3px] border-[#f2c9a5] bg-[#fff7ef] px-4 py-2 font-semibold text-[#d86fa2] shadow-[0_2px_0_#e6b98f]"
+          >
+            {"open in new tab"}
+          </Link>
+        </div>
+      </Panel>
+    </SiteFrame>
+  )
+}
+
+// app/blog/page.tsx
+import { SiteFrame } from "@/components/site-frame"
+import { Panel } from "@/components/panel"
+import { posts } from "@/data/posts"
+import { PostCard } from "@/components/post-card"
+
+export default function BlogPage() {
+  return (
+    <SiteFrame title="SUGARANGEL" contentHeight={640}>
+      <Panel title="blog" className="h-[640px]" scrollable>
+        <div className="space-y-3">
+          {posts.map((p) => (
+            <PostCard key={p.slug} slug={p.slug} title={p.title} date={p.date} excerpt={p.excerpt} />
+          ))}
+          <div className="h-2" />
+        </div>
+      </Panel>
+    </SiteFrame>
+  )
+}
+
+// app/projects/page.tsx
+import { SiteFrame } from "@/components/site-frame"
+import { Panel } from "@/components/panel"
+import { projects } from "@/data/projects"
+import { ProjectCard } from "@/components/project-card"
+
+export default function ProjectsPage() {
+  return (
+    <SiteFrame title="SUGARANGEL" contentHeight={640}>
+      <Panel title="projects" className="h-[640px]" scrollable>
+        <div className="grid grid-cols-1 gap-3">
+          {projects.map((p) => (
+            <ProjectCard
+              key={p.slug}
+              title={p.title}
+              description={p.description}
+              image={p.image}
+              link={p.link}
+              repo={p.repo}
+            />
+          ))}
+          {/* placeholder to visually balance if count is small */}
+          <div className="rounded-xl border-[3px] border-[#f2c9a5] bg-[#fff7ef] p-3 text-center text-sm text-[#9a7f62]">
+            {"more coming soon ✿"}
+          </div>
+        </div>
+      </Panel>
+    </SiteFrame>
+  )
+}

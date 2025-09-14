@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Components</title>
+</head>
+<body>
+    <h1>Testing Components</h1>
+    
+    <h2>Theme Toggle Test</h2>
+    <button id="theme-toggle" onclick="toggleTheme()">🌙</button>
+    
+    <h2>GitHub API Test</h2>
+    <div id="github-test">Loading...</div>
+    
+    <script>
+        // Test theme toggle
+        function toggleTheme() {
+            const button = document.getElementById('theme-toggle');
+            const isDark = document.documentElement.classList.contains('dark');
+            if (isDark) {
+                document.documentElement.classList.remove('dark');
+                button.textContent = '🌙';
+            } else {
+                document.documentElement.classList.add('dark');
+                button.textContent = '🌞';
+            }
+        }
+        
+        // Test GitHub API
+        async function testGitHub() {
+            try {
+                const response = await fetch('https://api.github.com/users/Vidushi2709');
+                const data = await response.json();
+                document.getElementById('github-test').innerHTML = `
+                    <p>Username: ${data.login}</p>
+                    <p>Followers: ${data.followers}</p>
+                    <p>Following: ${data.following}</p>
+                    <p>Public Repos: ${data.public_repos}</p>
+                `;
+            } catch (error) {
+                document.getElementById('github-test').innerHTML = `Error: ${error.message}`;
+            }
+        }
+        
+        testGitHub();
+    </script>
+</body>
+</html>

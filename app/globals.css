@@ -1,0 +1,211 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: #f6e6ee;
+  --foreground: #1f2937;
+  --card: #ffffff;
+  --card-foreground: #1f2937;
+  --popover: #ffffff;
+  --popover-foreground: #1f2937;
+  /* Light mode primary/secondary per request */
+  --primary: #d04f99;
+  --primary-foreground: #f6e6ee;
+  --secondary: #8acfd1;
+  --secondary-foreground: #333333;
+  --muted: #f6f7f9;
+  --muted-foreground: #6b7280;
+  --muted-text: #6b7280;
+  --accent: #f3f4f6;
+  --accent-foreground: #374151;
+  --destructive: #ef4444;
+  --border: #d04f99;
+  --input: #d04f99;
+  --input-bg: #f6e6ee;
+  --input-border: #d04f99;
+  --ring: #d1d5db;
+  --header-bg: #f3f4f6;
+  --heading: #1f2937;
+  --panel-header-bg: #f3f4f6;
+  --chart-1: #60a5fa;
+  --chart-2: #34d399;
+  --chart-3: #fbbf24;
+  --chart-4: #f472b6;
+  --chart-5: #a78bfa;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #1f2937;
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--secondary);
+  --sidebar-accent-foreground: var(--secondary-foreground);
+  --sidebar-border: #e5e7eb;
+  --sidebar-ring: #d1d5db;
+  --font-poppins: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
+}
+
+.dark {
+  /* Blueberry-inspired dark palette */
+  --background: #748ca7;
+  --foreground: #e5e7eb;            /* general text */
+  --card: #1e3d6d;                  /* surfaces */
+  --card-foreground: #e5e7eb;
+  --popover: #123160;
+  --popover-foreground: #e5e7eb;
+  /* Dark mode primary/secondary per request */
+  --primary: #fbe2a7;
+  --primary-foreground: #092331;
+  --secondary: #e88dab;             /* buttons */
+  --secondary-foreground: #12242e;  /* button text */
+  /* Supporting tokens */
+  --muted: #0f2330;
+  --muted-foreground: #cbd5e1;
+  --muted-text: #ffffff;            /* small/thin text */
+  --accent: #0f2330;
+  --accent-foreground: #e5e7eb;
+  --destructive: #ef4444;
+  --border: #0b2346;                /* borders/margins/scrollbar */
+  --input: #324859;
+  --input-bg: #12242e;
+  --input-border: #324859;
+  --ring: #324859;
+  --header-bg: #f5f0e8;             /* headers like blog/navigation */
+  --heading: #ffffff;               /* bold/heading text */
+  --panel-header-bg: #2a4a7a;
+  --chart-1: #7dd3fc;
+  --chart-2: #86efac;
+  --chart-3: #fde68a;
+  --chart-4: #f9a8d4;
+  --chart-5: #c4b5fd;
+  --sidebar: #12242e;
+  --sidebar-foreground: #e5e7eb;
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--secondary);
+  --sidebar-accent-foreground: var(--secondary-foreground);
+  --sidebar-border: #324859;
+  --sidebar-ring: #324859;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    font-family: var(--font-poppins);
+    @apply bg-background text-foreground text-[15px] sm:text-[16px];
+    background-image: url('/RAWR.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+  }
+  
+  .dark body {
+    background-image: url('/RAWR (3).png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+  }
+  
+  /* Hide scrollbars globally but allow them for scrollable panels */
+  body, main {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  body::-webkit-scrollbar, 
+  main::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
+  }
+}
+
+/* Custom scrollbar styles for the site theme */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: color-mix(in oklab, var(--border) 20%, transparent);
+  border-radius: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+  border: 1px solid color-mix(in oklab, var(--border) 40%, transparent);
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in oklab, var(--border) 85%, black 15%);
+}
+
+/* Firefox scrollbar styles */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) color-mix(in oklab, var(--border) 20%, transparent);
+}
+
+/* Hide scrollbars */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}
+
+/* Additional scrollbar hiding for better browser support */
+.scrollbar-hide::-webkit-scrollbar-track {
+  display: none;
+}
+.scrollbar-hide::-webkit-scrollbar-thumb {
+  display: none;
+}
+
+/* Bullet styles: light uses button hover color, dark uses white */
+ul li::marker { color: var(--secondary); }
+.dark ul li::marker { color: #ffffff; }
